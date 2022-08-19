@@ -2156,10 +2156,23 @@ This is a full list of proofs that have changed form to use irrelevant instance 
   ↔⇒↣ : A ↔ B → A ↣ B
   ```
 
+* Added new inequality definition in `Data.Fin.Base`:
+  ```agda
+  data _≤′_ : Rel (Fin n) 0ℓ
+    ≤′-refl : i ≤′ i
+    í ≤′ inject₁ j → i ≤′ suc j
+  _<′_ : Rel (Fin n) 0ℓ
+  pattern <′-base          = ≤′-refl
+  pattern <′-step {j} i<′j = ≤′-step {j} i<′j
+  _≥′_ : Rel (Fin n) 0ℓ
+  _>′_ : Rel (Fin n) 0ℓ
+  ```
+
 * Added a new isomorphism to `Data.Fin.Properties`:
   ```agda
   2↔Bool : Fin 2 ↔ Bool
   ```
+
 * Added new isomorphisms to `Data.Unit.Polymorphic.Properties`:
   ```agda
   ⊤↔⊤* : ⊤ {ℓ} ↔ ⊤*
@@ -2186,17 +2199,4 @@ This is a full list of proofs that have changed form to use irrelevant instance 
 * Added new isomorphisms to `Function.Properties.Inverse`:
   ```agda
   ↔-fun : A ↔ B → C ↔ D → (A → C) ↔ (B → D)
-  ```
-
-* Added new function to `Data.Fin.Properties`
-  ```agda
-  i≤inject₁[j]⇒i≤1+j : i ≤ inject₁ j → i ≤ suc j
-  ```
-
-* Added new function to `Data.Fin.Induction`
-  ```agda
-  ≤-Induction : ∀ (P : Pred (Fin (suc n)) ℓ) {i} →
-                P i →
-                (∀ {i} → P (inject₁ i) → P (suc i)) →
-                ∀ {j} → j ≥ i → P j
   ```
