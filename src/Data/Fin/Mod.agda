@@ -108,4 +108,34 @@ induction P P₀ Pᵢ⇒Pᵢ₊₁ i = <-weakInduction P P₀ Pᵢ⇒Pᵢ₊₁�
   PInj {i} rewrite suc-inj≡fsuc i = id
 
   Pᵢ⇒Pᵢ₊₁′ : ∀ i → P (inject₁ i) → P (F.suc i)
-  Pᵢ⇒Pᵢ₊₁′ _ Pi = PInj (Pᵢ⇒Pᵢ₊₁ Pi)
+  Pᵢ⇒Pᵢ₊₁′ _ = PInj ∘ Pᵢ⇒Pᵢ₊₁
+
+suc-propagates : (i j : Fin n) → suc (i + j) ≡ suc i + j
+suc-propagates {ℕ.suc n} i j = induction P P₀ (λ {n} → Pᵢ⇒Pᵢ₊₁ {n}) i
+  where
+  P = λ i → suc (i + j) ≡ suc i + j
+  P₀ = begin
+    suc (zero {n} + j) ≡⟨ cong suc (+-identityˡ j) ⟩
+    suc j ≡⟨ {!!} ⟩
+    -- {!!} ≡⟨ {!!} ⟩
+    (toℕ (suc (zero {n})) ℕ+ j) ≡⟨⟩
+    suc (zero {n}) + j ∎
+  Pᵢ⇒Pᵢ₊₁ : ∀ {i} → P i → P (suc i)
+  Pᵢ⇒Pᵢ₊₁ = {!!}
+
+
++-assoc : Associative {n} _+_
++-assoc {ℕ.suc n} x y z = induction P P₀ (λ {n} → Pₓ⇒Pₓ₊₁ {n}) x
+  where
+  P = λ x → x + y + z ≡ x + (y + z)
+  P₀ = begin
+    zero {n} + y + z ≡⟨ +-identityˡ _ ⟩
+    y + z            ≡⟨ cong (_+ z) (+-identityˡ y) ⟩
+    (zero {n} + y) + z ∎
+
+  Pₓ⇒Pₓ₊₁ : ∀ {x} → P x → P (suc x)
+  Pₓ⇒Pₓ₊₁ {x} Px = begin
+    suc x + y + z ≡⟨ {!!} ⟩
+    {!!} ≡⟨ {!!} ⟩
+    -- {!!} ≡⟨ {!!} ⟩
+    suc x + (y + z) ∎
