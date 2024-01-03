@@ -20,6 +20,7 @@ module Relation.Binary.Construct.Add.Infimum.NonStrict
 
 open import Level using (_⊔_)
 open import Data.Sum.Base as Sum
+open import Data.Maybe.Relation.Binary.Connected using (Connected; nothing; nothing-just; just)
 open import Relation.Binary.PropositionalEquality.Core as P
   using (_≡_; refl)
 import Relation.Binary.PropositionalEquality.Properties as P
@@ -41,6 +42,11 @@ data _≤₋_ : Rel (A ₋) (a ⊔ ℓ) where
 
 [≤]-injective : ∀ {k l} → [ k ] ≤₋ [ l ] → k ≤ l
 [≤]-injective [ p ] = p
+
+≤₋-connected : ∀ {k l} → k ≤₋ l → Connected _≤_ k l
+≤₋-connected (⊥₋≤ ⊥₋) = nothing
+≤₋-connected (⊥₋≤ [ k ]) = nothing-just
+≤₋-connected [ p ] = just p
 
 ≤₋-trans : Transitive _≤_ → Transitive _≤₋_
 ≤₋-trans ≤-trans (⊥₋≤ l) q     = ⊥₋≤ _
