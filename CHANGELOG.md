@@ -88,3 +88,8 @@ Additions to existing modules
 
 * In `Function.Bundles`, added `_⟶ₛ_` as a synonym for `Func` that can
   be used infix.
+
+* Added a new proof in `Data.Fin.Properties`:
+  ```agda
+  opposite-injective : Injective _≡_ _≡_ (opposite {n})
+  ```

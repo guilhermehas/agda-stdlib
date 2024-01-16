@@ -1099,6 +1099,14 @@ opposite-suc {n} i = begin
   toℕ (opposite i)           ∎
   where open ≡-Reasoning
 
+opposite-injective : Injective _≡_ _≡_ (opposite {n})
+opposite-injective {ℕ.suc n} {i} {j} eq = toℕ-injective $ ℕₚ.∸-cancelˡ-≡ {m = n} (toℕ≤pred[n] i) (toℕ≤pred[n] j) (begin
+  n ∸ toℕ i       ≡˘⟨ opposite-prop i ⟩
+  toℕ (opposite i) ≡⟨ cong toℕ eq ⟩
+  toℕ (opposite j) ≡⟨ opposite-prop j ⟩
+  n ∸ toℕ j ∎)
+  where open ≡-Reasoning
+
 
 ------------------------------------------------------------------------
 -- DEPRECATED NAMES
